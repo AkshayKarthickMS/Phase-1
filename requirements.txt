@@ -1,6 +1,6 @@
-streamlit==1.42.0        # your selected version
-numpy==1.26.4            # <2.0 recommended because many libs aren’t yet fully numpy‑2 compatible. :contentReference[oaicite:0]{index=0}
-pandas==2.2.4            # works well with numpy 1.26.x and streamlit <2.0
-plotly==5.24.1           # fine as you listed
-scikit_learn==1.3.2      # ok with numpy 1.26.x
-networkx==3.4.2          # recent version, should be compatible
+streamlit==1.42.0
+numpy==1.26.4
+pandas==2.3.3
+plotly==5.24.1
+scikit-learn==1.3.2
+networkx==3.4.2
