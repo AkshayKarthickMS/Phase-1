@@ -270,7 +270,7 @@ with tabs[6]:
 
 # --- Footer / quick help ---
 st.markdown("---")
-st.caption("Tip: to force recompute (clear all caches), use Streamlit's 'Clear cache and rerun' from the app menu.")
+
 
 
 
