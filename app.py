@@ -34,11 +34,11 @@ import os
 
 if os.path.exists("client_logo.png"):
     st.sidebar.image("client_logo.png", width=160)
-st.sidebar.title("Unified Dashboard")
-st.sidebar.markdown("Preloaded dashboards — switch tabs for instant views.")
+st.sidebar.title("Datharm")
+st.sidebar.markdown("Switch tabs for instant views.")
 
 # Optional: let user change csv filenames if needed
-st.sidebar.header("Data files (optional override)")
+st.sidebar.header("Data files")
 zd_path = st.sidebar.text_input("Zero-dose CSV", value="zerodose.csv")
 vis_path = st.sidebar.text_input("Facility visit CSV", value="facility_visit.csv")
 facility_csv_override = vis_path  # keep names consistent where called
@@ -273,4 +273,5 @@ with tabs[6]:
 # --- Footer / quick help ---
 st.markdown("---")
 st.caption("Tip: to force recompute (clear all caches), use Streamlit's 'Clear cache and rerun' from the app menu.")
+
 
