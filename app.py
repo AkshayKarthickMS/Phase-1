@@ -38,7 +38,6 @@ st.sidebar.title("Datharm")
 st.sidebar.markdown("Switch tabs for instant views.")
 
 # Optional: let user change csv filenames if needed
-facility_csv_override = vis_path  # keep names consistent where called
 
 # Preload toggle (but we will preload by default)
 preload_on_start = st.sidebar.checkbox("Preload all dashboards on start", value=True)
@@ -270,6 +269,7 @@ with tabs[6]:
 # --- Footer / quick help ---
 st.markdown("---")
 st.caption("Tip: to force recompute (clear all caches), use Streamlit's 'Clear cache and rerun' from the app menu.")
+
 
 
 
