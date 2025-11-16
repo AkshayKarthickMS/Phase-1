@@ -16,7 +16,7 @@ Unified Vaccine Analytics Dashboard (Streamlit)
 import streamlit as st
 from textwrap import dedent
 
-st.set_page_config(page_title="Unified Vaccine Analytics Dashboard", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="AI-Powered Insights from MCHTrack Zero-dose Immunization Data", layout="wide", initial_sidebar_state="expanded")
 
 # --- Imports of your dashboard modules (these are the files we converted) ---
 # Each module exposes at least one cached "get_*" or "build_*" function to precompute heavy work,
@@ -273,3 +273,4 @@ with tabs[6]:
 # --- Footer / quick help ---
 st.markdown("---")
 st.caption("Tip: to force recompute (clear all caches), use Streamlit's 'Clear cache and rerun' from the app menu.")
+
