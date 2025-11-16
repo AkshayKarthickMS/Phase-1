@@ -132,8 +132,8 @@ tab_labels = [
     "3 • Age Analytics",
     "4 • Household / Settlements",
     "5 • Time-series & Follow-up",
-    "6 • Additional Analytics",
-    "7 • Risk & Segmentation"
+    "6 • Risk & Segmentation",
+    "7 • Additional Analytics"
 ]
 tabs = st.tabs(tab_labels)
 
@@ -270,6 +270,7 @@ with tabs[5]:
 
 # --- Footer / quick help ---
 st.markdown("---")
+
 
 
 
