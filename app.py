@@ -46,16 +46,15 @@ facility_csv_override = vis_path  # keep names consistent where called
 preload_on_start = st.sidebar.checkbox("Preload all dashboards on start", value=True)
 
 # Small instruction
-st.sidebar.markdown(dedent("""
-**Notes**
-- Large CSVs and models run once (cached) and are reused.
-- To clear cached computations: _Streamlit menu → Clear cache and rerun_.
-"""))
-
+# st.sidebar.markdown(dedent("""
+# **Notes**
+# - Large CSVs and models run once (cached) and are reused.
+# - To clear cached computations: _Streamlit menu → Clear cache and rerun_.
+# """))
 
 # --- Main header ---
-st.title("Unified Vaccine Analytics Dashboard")
-st.write("All dashboards are precomputed and cached for instant switching. Use the sidebar to change source file names if needed.")
+st.title("AI-Powered Insights from MCHTrack Zero-dose Immunization Data")
+st.write("Switch tabs for various categories of visualizations")
 
 # --- Preload all dashboards (cached functions) ---
 preload_errors = {}
@@ -272,6 +271,7 @@ with tabs[6]:
 # --- Footer / quick help ---
 st.markdown("---")
 st.caption("Tip: to force recompute (clear all caches), use Streamlit's 'Clear cache and rerun' from the app menu.")
+
 
 
 
