@@ -165,8 +165,8 @@ with tabs[1]:
         for title, fig in figs_gender:
             st.markdown(f"### {title}")
             st.plotly_chart(fig, use_container_width=True)
-        st.markdown("### Sample zero-dose data")
-        st.dataframe(data_gender.get('zerodose_df').head(200) if data_gender is not None else "No data")
+        # st.markdown("### Sample zero-dose data")
+        # st.dataframe(data_gender.get('zerodose_df').head(200) if data_gender is not None else "No data")
     else:
         st.warning("Gender dashboard not preloaded. Attempting to render using render_gender_dashboard()...")
         try:
@@ -181,8 +181,8 @@ with tabs[2]:
         figs_age, zd_age_df, facility_age_df = preloaded['age']
         for fig in figs_age:
             st.plotly_chart(fig, use_container_width=True)
-        with st.expander("Preview zero-dose data"):
-            st.dataframe(zd_age_df.head(200))
+        # with st.expander("Preview zero-dose data"):
+        #     st.dataframe(zd_age_df.head(200))
     else:
         st.warning("Age dashboard was not preloaded. Attempting to call get_dashboard_age() directly...")
         try:
@@ -217,8 +217,8 @@ with tabs[4]:
         fig_enroll_ts, fig_long_ts, table_ts = preloaded['timeseries']
         st.plotly_chart(fig_enroll_ts, use_container_width=True)
         st.plotly_chart(fig_long_ts, use_container_width=True)
-        st.subheader("Settlement summary (top rows)")
-        st.dataframe(table_ts)
+        # st.subheader("Settlement summary (top rows)")
+        # st.dataframe(table_ts)
     else:
         st.warning("Timeseries dashboard not preloaded. Attempting to run show_timeseries_dashboard()...")
         try:
@@ -270,6 +270,7 @@ with tabs[5]:
 
 # --- Footer / quick help ---
 st.markdown("---")
+
 
 
 
