@@ -227,7 +227,7 @@ with tabs[4]:
             st.error(f"Failed to render timeseries dashboard: {e}")
 
 # Tab 6: Additional Analytics
-with tabs[5]:
+with tabs[6]:
     st.header("Additional Analytics")
     if preloaded.get('additional'):
         fig_heat, fig_net, fig_trend = preloaded['additional']
@@ -245,7 +245,7 @@ with tabs[5]:
             st.error(f"Failed to render additional analytics: {e}")
 
 # Tab 7: Risk & Segmentation (ML)
-with tabs[6]:
+with tabs[5]:
     st.header("Predictive Risk & Segmentation")
     if preloaded.get('risk'):
         fig_prob, fig_feat, fig_pca, table_risk = preloaded['risk']
@@ -270,6 +270,7 @@ with tabs[6]:
 
 # --- Footer / quick help ---
 st.markdown("---")
+
 
 
 
