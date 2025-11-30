@@ -62,12 +62,17 @@ gemini_api_key = st.sidebar.text_input("Enter Gemini API Key", type="password", 
 st.sidebar.markdown("---")
 
 # Optional: let user change csv filenames if needed
-st.sidebar.header("Data files")
-zd_path = st.sidebar.text_input("Zero-dose CSV", value="zerodose.csv")
-vis_path = st.sidebar.text_input("Facility visit CSV", value="facility_visit.csv")
-facility_csv_override = vis_path  # keep names consistent where called
-# Preload toggle (but we will preload by default)
-preload_on_start = st.sidebar.checkbox("Preload all dashboards on start", value=True)
+# st.sidebar.header("Data files")
+# zd_path = st.sidebar.text_input("Zero-dose CSV", value="zerodose.csv")
+# vis_path = st.sidebar.text_input("Facility visit CSV", value="facility_visit.csv")
+# facility_csv_override = vis_path  # keep names consistent where called
+# # Preload toggle (but we will preload by default)
+# preload_on_start = st.sidebar.checkbox("Preload all dashboards on start", value=True)
+
+zd_path = "zerodose.csv"
+vis_path = "facility_visit.csv"
+facility_csv_override = vis_path
+preload_on_start = True
 
 # Small instruction
 # st.sidebar.markdown(dedent("""
@@ -322,6 +327,7 @@ with tabs[5]:
             
 # --- Footer / quick help ---
 st.markdown("---")
+
 
 
 
