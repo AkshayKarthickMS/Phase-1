@@ -22,26 +22,30 @@ st.set_page_config(page_title="AI-Powered Insights from MCHTrack Zero-dose Immun
                    layout="wide",
                    initial_sidebar_state="expanded")
 
-# --- Hide Streamlit UI elements completely ---
 hide_streamlit_style = """
     <style>
-        /* Hide hamburger menu */
+        /* Hide Streamlit main menu, header, and footer */
         #MainMenu {visibility: hidden;}
-
-        /* Hide header (includes profile icon in new Streamlit versions) */
         header {visibility: hidden;}
-
-        /* Hide footer */
         footer {visibility: hidden;}
 
-        /* Hide "Hosted with Streamlit" badge and profile icon (Cloud-specific classes) */
+        /* Hide Streamlit Cloud profile icon containers */
+        .st-emotion-cache-13ln4jf {display: none !important;}
+        .st-emotion-cache-17ziqus {display: none !important;}
+
+        /* 🔥 Hide bottom-right Streamlit Cloud badge */
+        .stActionButton {display: none !important;}
+        .stDeployButton {display: none !important;}
+
+        /* Also remove newer badge container classes */
         .viewerBadge_container__1QSob {display: none !important;}
         .viewerBadge_link__1S137 {display: none !important;}
-        .st-emotion-cache-13ln4jf {display: none !important;} /* Streamlit Cloud profile icon */
-        .st-emotion-cache-17ziqus {display: none !important;} /* Extra profile container */
+        .st-emotion-cache-12fmjuu {display: none !important;}  
+        .st-emotion-cache-1wbqy5l {display: none !important;}
     </style>
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
 
 
 # --- Imports of your dashboard modules (these are the files we converted) ---
@@ -335,6 +339,7 @@ with tabs[5]:
             
 # --- Footer / quick help ---
 st.markdown("---")
+
 
 
 
