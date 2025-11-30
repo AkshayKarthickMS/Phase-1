@@ -22,10 +22,6 @@ st.set_page_config(page_title="AI-Powered Insights from MCHTrack Zero-dose Immun
                    layout="wide",
                    initial_sidebar_state="expanded")
 
-st.set_page_config(page_title="AI-Powered Insights from MCHTrack Zero-dose Immunization Data",
-                   layout="wide",
-                   initial_sidebar_state="expanded")
-
 # --- Aggressive removal of Streamlit Cloud badges / crown / profile / footer ---
 hide_streamlit_style = """
     <style>
@@ -385,6 +381,7 @@ with tabs[5]:
             
 # --- Footer / quick help ---
 st.markdown("---")
+
 
 
 
