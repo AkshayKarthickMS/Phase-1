@@ -22,71 +22,18 @@ st.set_page_config(page_title="AI-Powered Insights from MCHTrack Zero-dose Immun
                    layout="wide",
                    initial_sidebar_state="expanded")
 
-# --- Aggressive removal of Streamlit Cloud badges / crown / profile / footer ---
+# --- Hide Streamlit header/menu/footer (removes GitHub / "Made with Streamlit" icons) ---
 hide_streamlit_style = """
     <style>
-    /* Basic known elements */
-    #MainMenu, header, footer {visibility: hidden !important; display: none !important;}
-
-    /* Known Streamlit Cloud badge / viewer classes (variants) */
-    .viewerBadge_container__1QSob,
-    .viewerBadge_link__1S137,
-    .streamlit-badge,
-    .stActionButton,
-    .stDeployButton,
-    .st-emotion-cache-13ln4jf,
-    .st-emotion-cache-17ziqus,
-    .st-emotion-cache-12fmjuu,
-    .st-emotion-cache-1wbqy5l {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        pointer-events: none !important;
-    }
-
-    /* Any anchor linking to streamlit or share.streamlit - hide it */
-    a[href*="streamlit"] { display: none !important; visibility: hidden !important; pointer-events: none !important; }
-
-    /* Hide any element with aria-label mentioning Streamlit or Hosted */
-    [aria-label*="Streamlit"], [aria-label*="host"], [title*="Streamlit"], [title*="hosted"] {
-        display: none !important;
-        visibility: hidden !important;
-        pointer-events: none !important;
-    }
-
-    /* Hide iframes that look like badges / embeds (src containing streamlit, badge, deploy, share) */
-    iframe[src*="streamlit"], iframe[src*="share"], iframe[src*="badge"], iframe[src*="deploy"] {
-        display: none !important;
-        visibility: hidden !important;
-    }
-
-    /* Generic: any element that is fixed to bottom-right (likely the badge) */
-    /* This targets inline style cases e.g. style="position: fixed; bottom: ...; right: ...;" */
-    [style*="position:fixed"][style*="bottom"][style*="right"],
-    [style*="position: fixed"][style*="bottom"][style*="right"] {
-        display: none !important;
-        visibility: hidden !important;
-        pointer-events: none !important;
-    }
-
-    /* More general: hide any small fixed element in bottom-right area with high z-index */
-    /* Limits: targets elements with size typical for badges (<= 150px) */
-    div[style][style*="position"][style*="fixed"] {
-        /* extra safety: only affect very small fixed elements */
-        max-width: 160px !important;
-        max-height: 160px !important;
-    }
-    div[style*="position:fixed"][style*="right:"] {
-        display: none !important;
-    }
-
-    /* Final catch-all: hide elements whose children include an SVG crown-like path (best-effort) */
-    svg path[d], svg { display: none !important; }
-
+      /* top-right hamburger menu */
+      #MainMenu {visibility: hidden;}
+      /* top header (contains icons in some Streamlit versions) */
+      header {visibility: hidden;}
+      /* bottom footer (Made with Streamlit / GitHub links) */
+      footer {visibility: hidden;}
     </style>
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
-
 
 
 
