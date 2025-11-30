@@ -22,15 +22,23 @@ st.set_page_config(page_title="AI-Powered Insights from MCHTrack Zero-dose Immun
                    layout="wide",
                    initial_sidebar_state="expanded")
 
-# --- Hide Streamlit header/menu/footer (removes GitHub / "Made with Streamlit" icons) ---
+# --- Hide Streamlit UI elements completely ---
 hide_streamlit_style = """
     <style>
-      /* top-right hamburger menu */
-      #MainMenu {visibility: hidden;}
-      /* top header (contains icons in some Streamlit versions) */
-      header {visibility: hidden;}
-      /* bottom footer (Made with Streamlit / GitHub links) */
-      footer {visibility: hidden;}
+        /* Hide hamburger menu */
+        #MainMenu {visibility: hidden;}
+
+        /* Hide header (includes profile icon in new Streamlit versions) */
+        header {visibility: hidden;}
+
+        /* Hide footer */
+        footer {visibility: hidden;}
+
+        /* Hide "Hosted with Streamlit" badge and profile icon (Cloud-specific classes) */
+        .viewerBadge_container__1QSob {display: none !important;}
+        .viewerBadge_link__1S137 {display: none !important;}
+        .st-emotion-cache-13ln4jf {display: none !important;} /* Streamlit Cloud profile icon */
+        .st-emotion-cache-17ziqus {display: none !important;} /* Extra profile container */
     </style>
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
@@ -327,6 +335,7 @@ with tabs[5]:
             
 # --- Footer / quick help ---
 st.markdown("---")
+
 
 
 
