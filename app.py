@@ -18,7 +18,23 @@ from textwrap import dedent
 import ai_helper
 
 
-st.set_page_config(page_title="AI-Powered Insights from MCHTrack Zero-dose Immunization Data", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="AI-Powered Insights from MCHTrack Zero-dose Immunization Data",
+                   layout="wide",
+                   initial_sidebar_state="expanded")
+
+# --- Hide Streamlit header/menu/footer (removes GitHub / "Made with Streamlit" icons) ---
+hide_streamlit_style = """
+    <style>
+      /* top-right hamburger menu */
+      #MainMenu {visibility: hidden;}
+      /* top header (contains icons in some Streamlit versions) */
+      header {visibility: hidden;}
+      /* bottom footer (Made with Streamlit / GitHub links) */
+      footer {visibility: hidden;}
+    </style>
+"""
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
 
 # --- Imports of your dashboard modules (these are the files we converted) ---
 # Each module exposes at least one cached "get_*" or "build_*" function to precompute heavy work,
@@ -306,6 +322,7 @@ with tabs[5]:
             
 # --- Footer / quick help ---
 st.markdown("---")
+
 
 
 
