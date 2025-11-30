@@ -153,7 +153,7 @@ def render_with_ai_analysis(fig, title, key_suffix):
     button_key = f"analyse_btn_{key_suffix}"
     
     # Create the "Analyse" button
-    if st.button(f"✨ Analyse with Gemini", key=button_key):
+    if st.button(f"✨ Analyse with AI", key=button_key):
         # Call the helper function to get the analysis
         analysis = ai_helper.get_gemini_analysis(fig, title, gemini_api_key)
         # If an analysis is returned, display it in an info box
@@ -306,6 +306,7 @@ with tabs[5]:
             
 # --- Footer / quick help ---
 st.markdown("---")
+
 
 
 
