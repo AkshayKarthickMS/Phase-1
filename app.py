@@ -15,6 +15,8 @@ Unified Vaccine Analytics Dashboard (Streamlit)
 
 import streamlit as st
 from textwrap import dedent
+import ai_helper
+
 
 st.set_page_config(page_title="AI-Powered Insights from MCHTrack Zero-dose Immunization Data", layout="wide", initial_sidebar_state="expanded")
 
@@ -36,6 +38,12 @@ if os.path.exists("client_logo.png"):
     st.sidebar.image("client_logo.png", width=160)
 st.sidebar.title("Datharm")
 st.sidebar.markdown("Switch tabs for instant views.")
+
+# --- Gemini API Key Input ---
+# Add a text input in the sidebar for the user to enter their Gemini API key.
+st.sidebar.header("AI Analysis Settings")
+gemini_api_key = st.sidebar.text_input("Enter Gemini API Key", type="password", help="Required for the 'Analyse' button on charts.")
+st.sidebar.markdown("---")
 
 # Optional: let user change csv filenames if needed
 st.sidebar.header("Data files")
@@ -125,6 +133,33 @@ if preload_on_start:
             for k, v in preload_errors.items():
                 st.write(f"**{k}**: {v}")
 
+# --- Helper function to render chart with AI analysis button ---
+def render_with_ai_analysis(fig, title, key_suffix):
+    """
+    Displays a Plotly chart and an 'Analyse' button.
+    When the button is clicked, it calls the AI helper to generate and display an analysis.
+
+    Args:
+        fig: The Plotly figure to display.
+        title: The title of the chart.
+        key_suffix: A unique suffix for the button's key to prevent conflicts.
+    """
+    # Display the chart's title
+    st.markdown(f"### {title}")
+    # Display the Plotly chart
+    st.plotly_chart(fig, use_container_width=True)
+    
+    # Create a unique key for the button based on the suffix
+    button_key = f"analyse_btn_{key_suffix}"
+    
+    # Create the "Analyse" button
+    if st.button(f"✨ Analyse with Gemini", key=button_key):
+        # Call the helper function to get the analysis
+        analysis = ai_helper.get_gemini_analysis(fig, title, gemini_api_key)
+        # If an analysis is returned, display it in an info box
+        if analysis:
+            st.info(analysis)
+
 # --- Tabs layout ---
 tab_labels = [
     "1 • Vaccine Field",
@@ -143,9 +178,9 @@ with tabs[0]:
     if preloaded.get('vaccine'):
         figs_vaccine, summary_vaccine = preloaded['vaccine']
         st.info(f"Records: {summary_vaccine.get('total_records', 'N/A'):,} | Unique LGAs: {summary_vaccine.get('unique_lgas','N/A'):,} | Vaccines tracked: {summary_vaccine.get('vaccine_count','N/A')}")
-        for title, fig in figs_vaccine:
-            st.markdown(f"### {title}")
-            st.plotly_chart(fig, use_container_width=True)
+        # Iterate through the figures and render them with the AI analysis button
+        for i, (title, fig) in enumerate(figs_vaccine):
+            render_with_ai_analysis(fig, title, f"vaccine_{i}")
     else:
         st.warning("Vaccine dashboard not preloaded or failed. Attempting to render using render_vaccine_dashboard()...")
         try:
@@ -162,11 +197,11 @@ with tabs[1]:
             with st.expander("Key gender insights"):
                 for line in insights_gender:
                     st.write("•", line)
-        for title, fig in figs_gender:
-            st.markdown(f"### {title}")
-            st.plotly_chart(fig, use_container_width=True)
-        # st.markdown("### Sample zero-dose data")
-        # st.dataframe(data_gender.get('zerodose_df').head(200) if data_gender is not None else "No data")
+        # Iterate through the figures and render them with the AI analysis button
+        for i, (title, fig) in enumerate(figs_gender):
+            render_with_ai_analysis(fig, title, f"gender_{i}")
+        st.markdown("### Sample zero-dose data")
+        st.dataframe(data_gender.get('zerodose_df').head(200) if data_gender is not None else "No data")
     else:
         st.warning("Gender dashboard not preloaded. Attempting to render using render_gender_dashboard()...")
         try:
@@ -179,16 +214,20 @@ with tabs[2]:
     st.header("Age-based Zero-Dose Analytics")
     if preloaded.get('age'):
         figs_age, zd_age_df, facility_age_df = preloaded['age']
-        for fig in figs_age:
-            st.plotly_chart(fig, use_container_width=True)
-        # with st.expander("Preview zero-dose data"):
-        #     st.dataframe(zd_age_df.head(200))
+        for i, fig in enumerate(figs_age):
+            # Extract title from layout if available, otherwise generate a generic one
+            title = fig.layout.title.text if fig.layout.title.text else f"Age Analysis Chart {i+1}"
+            # Render the figure with the AI analysis button
+            render_with_ai_analysis(fig, title, f"age_{i}")
+        with st.expander("Preview zero-dose data"):
+            st.dataframe(zd_age_df.head(200))
     else:
         st.warning("Age dashboard was not preloaded. Attempting to call get_dashboard_age() directly...")
         try:
             figs_age, zd_age_df, facility_age_df = get_dashboard_age()
-            for fig in figs_age:
-                st.plotly_chart(fig, use_container_width=True)
+            for i, fig in enumerate(figs_age):
+                title = fig.layout.title.text if fig.layout.title.text else f"Age Analysis Chart {i+1}"
+                render_with_ai_analysis(fig, title, f"age_{i}_direct")
         except Exception as e:
             st.error(f"Failed to load Age dashboard: {e}")
 
@@ -198,9 +237,9 @@ with tabs[3]:
     if preloaded.get('household'):
         figs_house, table_house, summary_house = preloaded['household']
         st.info(f"Total settlements: {summary_house.get('total_settlements', 'N/A')}")
-        for title, fig in figs_house:
-            st.markdown(f"### {title}")
-            st.plotly_chart(fig, use_container_width=True)
+        # Iterate through the figures and render them with the AI analysis button
+        for i, (title, fig) in enumerate(figs_house):
+            render_with_ai_analysis(fig, title, f"household_{i}")
         st.markdown("### Settlement details (top rows)")
         st.dataframe(table_house)
     else:
@@ -215,10 +254,11 @@ with tabs[4]:
     st.header("Time-Series & Follow-up")
     if preloaded.get('timeseries'):
         fig_enroll_ts, fig_long_ts, table_ts = preloaded['timeseries']
-        st.plotly_chart(fig_enroll_ts, use_container_width=True)
-        st.plotly_chart(fig_long_ts, use_container_width=True)
-        # st.subheader("Settlement summary (top rows)")
-        # st.dataframe(table_ts)
+        # Render each figure with the AI analysis button
+        render_with_ai_analysis(fig_enroll_ts, "Enrollment Time-Series", "timeseries_enroll")
+        render_with_ai_analysis(fig_long_ts, "Longitudinal Follow-up", "timeseries_long")
+        st.subheader("Settlement summary (top rows)")
+        st.dataframe(table_ts)
     else:
         st.warning("Timeseries dashboard not preloaded. Attempting to run show_timeseries_dashboard()...")
         try:
@@ -231,12 +271,10 @@ with tabs[6]:
     st.header("Additional Analytics")
     if preloaded.get('additional'):
         fig_heat, fig_net, fig_trend = preloaded['additional']
-        st.subheader("Ward-wise Zero-Dose Density Heatmap")
-        st.plotly_chart(fig_heat, use_container_width=True)
-        st.subheader("Household Network Graph (simulated)")
-        st.plotly_chart(fig_net, use_container_width=True)
-        st.subheader("Drop-off Trend by Enrollment Month")
-        st.plotly_chart(fig_trend, use_container_width=True)
+        # Render each figure with the AI analysis button
+        render_with_ai_analysis(fig_heat, "Ward-wise Zero-Dose Density Heatmap", "additional_heat")
+        render_with_ai_analysis(fig_net, "Household Network Graph (simulated)", "additional_net")
+        render_with_ai_analysis(fig_trend, "Drop-off Trend by Enrollment Month", "additional_trend")
     else:
         st.warning("Additional analytics not preloaded. Attempting to render show_additional_dashboard()...")
         try:
@@ -249,27 +287,26 @@ with tabs[5]:
     st.header("Predictive Risk & Segmentation")
     if preloaded.get('risk'):
         fig_prob, fig_feat, fig_pca, table_risk = preloaded['risk']
-        st.subheader("Predicted Dropoff Probability Distribution")
-        st.plotly_chart(fig_prob, use_container_width=True)
-        st.subheader("Top Feature Importances")
-        st.plotly_chart(fig_feat, use_container_width=True)
-        st.subheader("Clusters (PCA)")
-        st.plotly_chart(fig_pca, use_container_width=True)
+        # Render each figure with the AI analysis button
+        render_with_ai_analysis(fig_prob, "Predicted Dropoff Probability Distribution", "risk_prob")
+        render_with_ai_analysis(fig_feat, "Top Feature Importances", "risk_feat")
+        render_with_ai_analysis(fig_pca, "Clusters (PCA)", "risk_pca")
         st.subheader("Top children by dropoff probability")
         st.dataframe(table_risk)
     else:
         st.warning("Risk dashboard not preloaded. Attempting to compute on demand (heavy) — this may take time.")
         try:
             fig_prob, fig_feat, fig_pca, table_risk = get_dashboard_risk()
-            st.plotly_chart(fig_prob, use_container_width=True)
-            st.plotly_chart(fig_feat, use_container_width=True)
-            st.plotly_chart(fig_pca, use_container_width=True)
+            render_with_ai_analysis(fig_prob, "Predicted Dropoff Probability Distribution", "risk_prob_direct")
+            render_with_ai_analysis(fig_feat, "Top Feature Importances", "risk_feat_direct")
+            render_with_ai_analysis(fig_pca, "Clusters (PCA)", "risk_pca_direct")
             st.dataframe(table_risk)
         except Exception as e:
             st.error(f"Failed to compute risk dashboard: {e}")
-
+            
 # --- Footer / quick help ---
 st.markdown("---")
+
 
 
 
