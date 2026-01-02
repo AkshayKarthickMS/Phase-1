@@ -11,6 +11,7 @@ import data_utils
 import pandas as pd
 import os
 import datetime
+from pathlib import Path
 
 st.set_page_config(page_title="AI-Powered Insights from MCHTrack Zero-dose Immunization Data",
                    layout="wide",
@@ -22,6 +23,8 @@ hide_streamlit_style = """
       #MainMenu {visibility: hidden;}
       header {visibility: hidden;}
       footer {visibility: hidden;}
+      [data-testid="stToolbar"] {visibility: hidden !important;}
+      .stDeployButton {display:none;}
     </style>
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
@@ -46,9 +49,10 @@ if os.path.exists("client_logo.png"):
 # ==========================================
 st.sidebar.header("Global Filters")
 
-# Corrected paths based on your csv info (singular 'visit')
-zd_path = r"C:\Users\AkshayKarthickMS\Desktop\Phase-1-main\data\zerodose.xlsx"
-vis_path = r"C:\Users\AkshayKarthickMS\Desktop\Phase-1-main\data\facility_visits.csv"
+# Corrected paths Using pathlib for cross-platform compatibility
+base_path = Path(__file__).parent
+zd_path = str(base_path / "data" / "zerodose.xlsx")
+vis_path = str(base_path / "data" / "facility_visits.csv")
 facility_csv_override = vis_path
 preload_on_start = True
 
